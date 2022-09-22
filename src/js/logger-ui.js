@@ -248,6 +248,7 @@ LogEntry.prototype = {
     tstamp: 0,
     type: '',
     voided: false,
+    url: '',
 };
 
 /******************************************************************************/
@@ -436,6 +437,7 @@ const parseLogEntry = function(details) {
     }
 
     entry.textContent = textContent.join('\t');
+    entry.url = normalizeToStr(details.url);
     return entry;
 };
 
@@ -2518,6 +2520,7 @@ const loggerStats = (( ) => {
         let t0 = filteredLoggerEntries.length !== 0
             ? filteredLoggerEntries[filteredLoggerEntries.length - 1].tstamp
             : 0;
+        // console.log(filteredLoggerEntries)
         for ( const entry of filteredLoggerEntries ) {
             const text = entry.textContent;
             const fields = [];
@@ -2890,5 +2893,7 @@ if ( self.location.search.includes('popup=1') ) {
         { once: true }
     );
 }
-
+window.exportFilterData = function exportFilterData() {
+    return filteredLoggerEntries;
+}
 /******************************************************************************/
